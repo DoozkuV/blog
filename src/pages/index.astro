@@ -1,34 +1,55 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import InteractiveHeader from '../components/react/InteractiveHeader'; 
+import StandardHeader from "../components/layout/StandardHeader.astro";
+import AnimatedIntro from '../components/home/AnimatedIntro'; 
 import LatestPosts from '../components/LatestPosts.astro'; 
 
 // Configuration for InteractiveHeader 
 const siteConfig = {
 	userName: "George Padron", 
+  siteTitle: "GP",
 	linkedinUrl: "https://www.linkedin.com/in/george-padron-726623216/",
 	githubUrl: "https://www.github.com/DoozkuV",
 	// TODO: Link to my real X account
 	xUrl: "https://example.com", 
-	navLinks: [
+	introNavLinks: [
 		{ href: "/#about-me-content", label: "About Me", id: "nav-about"}, 
 		{ href: "/topics", label: "Topics", id: "nav-topics"}, 
-	]
+  ],
+	standardNavLinks: [
+		{ href: "/#about-me-content", label: "About Me" }, 
+		{ href: "/topics", label: "Topics" }, 
+		{ href: "/home", label: "Home" }, 
+  ],
+  standardHeaderId: "main-site-header"
 };
 ---
 
 <Layout title={`Home | ${siteConfig.userName} - Tech Blog`} description={`Welcome to ${siteConfig.userName}'s tech blog.`}> 
-	<InteractiveHeader
-		slot="header"
+<StandardHeader
+    slot="header"
+    headerId={siteConfig.standardHeaderId}
+    siteTitle={siteConfig.siteTitle}
+    navLinks={siteConfig.standardNavLinks}
+    socialLinksConfig={{
+      linkedinUrl: siteConfig.linkedinUrl,
+      githubUrl: siteConfig.githubUrl,
+      xUrl: siteConfig.xUrl,
+    }}
+    initiallyHiddenClass="standard-header-hidden-by-hero"
+  />
+
+	<AnimatedIntro
 		client:load 
 		userName={siteConfig.userName}
 		linkedinUrl={siteConfig.linkedinUrl}
 		githubUrl={siteConfig.githubUrl}
 		xUrl={siteConfig.xUrl}
-		navLinks={siteConfig.navLinks} 
+		navLinks={siteConfig.introNavLinks} 
+    standardHeaderId={siteConfig.standardHeaderId}
 	/>
 	
-	<div class="pt-12">
+	<div class="pt-0">
 		<section id="about-me-content" class="min-h-[40vh] py-16 md:py-20 flex items-center justify-center scroll-mt-20">
 			<div class="text-center max-w-3xl mx-auto">
 				<h2 class="text-3xl md:text-4xl font-headline mb-6">About Myself</h2>

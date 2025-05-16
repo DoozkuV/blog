@@ -1,0 +1,100 @@
+---
+import LinkedInIcon from "../icons/LinkedInIcon.astro";
+import GithubIcon from "../icons/GithubIcon.astro";
+import XIcon from "../icons/XIcon.astro";
+
+export interface NavLink {
+  href: string;
+  label: string;
+  id?: string;
+}
+
+export interface SocialLinkItem {
+  href: string;
+  label: string;
+  icon: any; // Astro component for the icon
+}
+
+interface Props {
+  siteTitle: string;
+  navLinks: NavLink[];
+  socialLinksConfig: {
+    linkedinUrl: string;
+    githubUrl: string;
+    xUrl: string;
+  };
+  headerId?: string; // ID for JS targeting
+  initiallyHiddenClass?: string; // Class for initial state on homepage
+}
+
+const {
+  siteTitle = "My Tech Blog",
+  navLinks = [
+    { href: "/#about-me-content", label: "About" },
+    { href: "/topics", label: "Topics" },
+    { href: "/blog", label: "Blog" },
+  ],
+  socialLinksConfig,
+  headerId = "standard-site-header",
+  initiallyHiddenClass,
+} = Astro.props;
+
+const socialButtons: SocialLinkItem[] = [
+  {
+    href: socialLinksConfig.linkedinUrl,
+    label: "LinkedIn",
+    icon: LinkedInIcon,
+  },
+  { href: socialLinksConfig.githubUrl, label: "GitHub", icon: GithubIcon },
+  { href: socialLinksConfig.xUrl, label: "X.com", icon: XIcon },
+];
+---
+
+<header
+  id={headerId}
+  class:list={[
+    "fixed top-0 left-0 right-0 z-40 py-3 px-4 sm:px-6 lg:px-8",
+    "bg-brand-black bg-opacity-80 backdrop-blur-md shadow-lg",
+    "transition-all duration-300 ease-in-out",
+    initiallyHiddenClass, // This class will control initial visibility (e.g., 'opacity-0 -translate-y-full')
+  ]}
+>
+  <div class="container mx-auto flex justify-between items-center">
+    <a
+      href="/"
+      class="text-xl sm:text-2xl font-headline hover:text-brand-accent transition-colors"
+    >
+      {siteTitle}
+    </a>
+    <nav class="flex items-center space-x-3 sm:space-x-4 md:space-x-6">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            id={link.id}
+            class="font-headline uppercase tracking-wider text-xs sm:text-sm border-2 border-transparent text-brand-white hover:border-brand-white hover:text-brand-white px-3 py-1.5 sm:px-4 sm:py-2 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 foucs:ring-accent focus:ring-opacity-70"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <div
+        class="flex items-center space-x-3 sm:space-x-4 pl-2 sm:pl-4 border-l border-r-gray-700"
+      >
+        {
+          socialButtons.map((social) => (
+            <a
+              href={social.href}
+              aria-label={social.label}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-brand-white hover:text-accent transition-colors duration-200"
+            >
+              <social.icon size={20} />
+            </a>
+          ))
+        }
+      </div>
+    </nav>
+  </div>
+</header>
