@@ -1,16 +1,43 @@
 ---
+import Layout from "../layouts/Layout.astro";
+import InteractiveHeader from '../components/react/InteractiveHeader'; 
+import LatestPosts from '../components/LatestPosts.astro'; 
 
+// Configuration for InteractiveHeader 
+const siteConfig = {
+	userName: "George Padron", 
+	linkedinUrl: "https://www.linkedin.com/in/george-padron-726623216/",
+	githubUrl: "https://www.github.com/DoozkuV",
+	// TODO: Link to my real X account
+	xUrl: "https://example.com", 
+	navLinks: [
+		{ href: "/#about-me-content", label: "About Me", id: "nav-about"}, 
+		{ href: "/topics", label: "Topics", id: "nav-topics"}, 
+	]
+};
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title={`Home | ${siteConfig.userName} - Tech Blog`} description={`Welcome to ${siteConfig.userName}'s tech blog.`}> 
+	<InteractiveHeader
+		slot="header"
+		client:load 
+		userName={siteConfig.userName}
+		linkedinUrl={siteConfig.linkedinUrl}
+		githubUrl={siteConfig.githubUrl}
+		xUrl={siteConfig.xUrl}
+		navLinks={siteConfig.navLinks} 
+	/>
+	
+	<div class="pt-12">
+		<section id="about-me-content" class="min-h-[40vh] py-16 md:py-20 flex items-center justify-center scroll-mt-20">
+			<div class="text-center max-w-3xl mx-auto">
+				<h2 class="text-3xl md:text-4xl font-headline mb-6">About Myself</h2>
+				<p class="text-lg text-gray-300 leading-relaxed">
+					Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quam dolores reiciendis, consectetur nihil odit voluptates impedit ab, ipsum a architecto animi eligendi enim obcaecati molestiae illum, porro exercitationem facilis.
+				</p>
+			</div>
+		</section>
+
+		<LatestPosts />
+	</div>
+</Layout>

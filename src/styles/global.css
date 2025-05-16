@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-black: '#000000';
+  --color-brand-white: '#FFFFFF';
+  --color-brand-accent: '#00ffff';
+  /* // Cyan accent for links/highlights */
+
+  --font-headline: 'Roboto Mono', monospace;
+  --font-body: 'Inter', sans-serif;
+
+  --animate-blink: blink 0.8s step-end infinite;
+
+  @keyframes blink {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+  }
+
+  --animate-fade-down: fade-down 0.5s ease-out forwards;
+
+  @keyframes fade-down {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  --animate-fade-up: fade-up 0.5s ease-out forwards;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+body {
+  @apply bg-brand-black text-brand-white font-body selection:bg-brand-accent selection:text-brand-accent;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-headline;
+}
+
+html {
+  scroll-behavior: smooth;
+}
