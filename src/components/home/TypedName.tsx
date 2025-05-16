@@ -23,10 +23,10 @@ const TypedName: React.FC<TypedNameProps> = ({ name, className, typingSpeed = 12
   }, [currentIndex, name, typingSpeed, onFinishedTyping]);
 
   return (
-    <div className={`relative inline-block ${className || ''}`}>
-      <span aria-label={name}>{displayText}</span>
+    <div className={`relative inline-block max-w-[7ch] sm:max-w-none ${className || ''}`}>
+      {currentIndex > 0 && <span aria-label={name}>{displayText}</span>}
       {currentIndex < name.length && (
-        <span className="inline-block w-[3px] h-[1em] bg-brand-white animate-blink ml-1 relative bottom-[0.1em]" aria-hidden="true"></span>
+        <span className="inline-block w-[3px] h-[1em] bg-brand-white animate-blink ml-1 relative bottom-[0.1em]" aria-hidden="true">|</span>
       )}
     </div>
   );
