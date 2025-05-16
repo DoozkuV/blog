@@ -73,7 +73,7 @@ const AnimatedIntro: React.FC<AnimatedIntroProps> = ({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting && entry.boundingClientRect.bottom < 50) {
+        if (entry.intersectionRatio <= .25) {
           headerElement.classList.remove('standard-header-hidden-by-hero');
           headerElement.classList.add('standard-header-revealed');
         } else {
@@ -83,14 +83,14 @@ const AnimatedIntro: React.FC<AnimatedIntroProps> = ({
       },
       {
         root: null,
-        threshold: 0.05,
+        threshold: 0.25,
       }
     );
 
     observer.observe(introSectionRef.current);
 
     return () => observer.disconnect();
-  }, [standardHeaderId, nameCompletelyTyped]);
+  }, [standardHeaderId]);
 
   const primaryButtonClasses = "font-headline uppercase tracking-wider transition-all duration-300 ease-in-out transform focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-75 disabled:opacity-50 bg-brand-white text-brand-black hover:bg-gray-200 active:scale-95 px-8 py-4 text-lg md:text-xl";
 
@@ -102,7 +102,7 @@ const AnimatedIntro: React.FC<AnimatedIntroProps> = ({
       <div className="mb-10 md:mb-12">
         <TypedName
           name={userName}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-headline"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-headline max-w-[7ch] sm:max-w-none "
           onFinishedTyping={() => setNameCompletelyTyped(true)}
         />
       </div>
