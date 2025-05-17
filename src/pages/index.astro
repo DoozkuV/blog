@@ -1,32 +1,36 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import StandardHeader from "../components/layout/StandardHeader.astro";
-import AnimatedIntro from '../components/home/AnimatedIntro'; 
-import LatestPosts from '../components/LatestPosts.astro'; 
+import AnimatedIntro from "../components/home/AnimatedIntro";
+import LatestPosts from "../components/LatestPosts.astro";
 
-// Configuration for InteractiveHeader 
+// Configuration for InteractiveHeader
 const siteConfig = {
-	userName: "George Padron", 
+  userName: "George Padron",
   siteTitle: "GP",
-	linkedinUrl: "https://www.linkedin.com/in/george-padron-726623216/",
-	githubUrl: "https://www.github.com/DoozkuV",
-	// TODO: Link to my real X account
-	xUrl: "https://example.com", 
-	introNavLinks: [
-		{ href: "/#about-me-content", label: "About Me", id: "nav-about"}, 
-		{ href: "/topics", label: "Topics", id: "nav-topics"}, 
+  linkedinUrl: "https://www.linkedin.com/in/george-padron-726623216/",
+  githubUrl: "https://www.github.com/DoozkuV",
+  // TODO: Link to my real X account
+  xUrl: "https://example.com",
+  introNavLinks: [
+    { href: "/#about-me-content", label: "About Me", id: "nav-about" },
+    { href: "/topics", label: "Topics", id: "nav-topics" },
+    { href: "/#latest-posts-content", label: "Posts" },
   ],
-	standardNavLinks: [
-		{ href: "/#about-me-content", label: "About Me" }, 
-		{ href: "/topics", label: "Topics" }, 
-		{ href: "/home", label: "Home" }, 
+  standardNavLinks: [
+    { href: "/home", label: "Home" },
+    { href: "/#about-me-content", label: "About Me" },
+    { href: "/topics", label: "Topics" },
   ],
-  standardHeaderId: "main-site-header"
+  standardHeaderId: "main-site-header",
 };
 ---
 
-<Layout title={`Home | ${siteConfig.userName} - Tech Blog`} description={`Welcome to ${siteConfig.userName}'s tech blog.`}> 
-<StandardHeader
+<Layout
+  title={`Home | ${siteConfig.userName} - Tech Blog`}
+  description={`Welcome to ${siteConfig.userName}'s tech blog.`}
+>
+  <StandardHeader
     slot="header"
     headerId={siteConfig.standardHeaderId}
     siteTitle={siteConfig.siteTitle}
@@ -39,26 +43,32 @@ const siteConfig = {
     initiallyHiddenClass="standard-header-hidden-by-hero"
   />
 
-	<AnimatedIntro
-		client:load 
-		userName={siteConfig.userName}
-		linkedinUrl={siteConfig.linkedinUrl}
-		githubUrl={siteConfig.githubUrl}
-		xUrl={siteConfig.xUrl}
-		navLinks={siteConfig.introNavLinks} 
+  <AnimatedIntro
+    client:load
+    userName={siteConfig.userName}
+    linkedinUrl={siteConfig.linkedinUrl}
+    githubUrl={siteConfig.githubUrl}
+    xUrl={siteConfig.xUrl}
+    navLinks={siteConfig.introNavLinks}
     standardHeaderId={siteConfig.standardHeaderId}
-	/>
-	
-	<div class="pt-0">
-		<section id="about-me-content" class="min-h-[40vh] py-16 md:py-20 flex items-center justify-center scroll-mt-20">
-			<div class="text-center max-w-3xl mx-auto">
-				<h2 class="text-3xl md:text-4xl font-headline mb-6">About Myself</h2>
-				<p class="text-lg text-gray-300 leading-relaxed">
-					Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quam dolores reiciendis, consectetur nihil odit voluptates impedit ab, ipsum a architecto animi eligendi enim obcaecati molestiae illum, porro exercitationem facilis.
-				</p>
-			</div>
-		</section>
+  />
 
-		<LatestPosts />
-	</div>
+  <div class="pt-0">
+    <section
+      id="about-me-content"
+      class="min-h-[40vh] py-16 md:py-20 flex items-center justify-center scroll-mt-20"
+    >
+      <div class="text-center max-w-3xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-headline mb-6">About Myself</h2>
+        <p class="text-lg text-gray-500 leading-relaxed">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quam
+          dolores reiciendis, consectetur nihil odit voluptates impedit ab,
+          ipsum a architecto animi eligendi enim obcaecati molestiae illum,
+          porro exercitationem facilis.
+        </p>
+      </div>
+    </section>
+
+    <LatestPosts id="latest-posts-content" />
+  </div>
 </Layout>
