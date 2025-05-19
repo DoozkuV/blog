@@ -114,7 +114,7 @@ const AnimatedIntro: React.FC<AnimatedIntroProps> = ({
               key={link.href}
               id={link.id}
               href={link.href}
-              className={`${primaryButtonClasses} ${showElements ? 'animate-fadeInUp' : ''}`}
+              className={`${primaryButtonClasses} ${showElements ? 'animate-fadeInUp' : 'cursor-default pointer-events-none'}`}
               style={showElements ? { animationDelay: `${index * 100 + 200}ms` } : {}}
             >
               {link.label}
@@ -123,7 +123,7 @@ const AnimatedIntro: React.FC<AnimatedIntroProps> = ({
         </nav>
 
         <div
-          className={`flex items-center space-x-5 sm:space-x-6 justify-center ${showElements ? 'animate-fadeInUp' : ''}`}
+          className={`flex items-center space-x-5 sm:space-x-6 justify-center ${showElements ? 'animate-fadeInUp' : 'cursor-default pointer-events-none'}`}
           style={showElements ? { animationDelay: `${navLinks.length * 100 + 300}ms` } : {}}
         >
           {socialButtons.map((social) => (
