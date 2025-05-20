@@ -1,11 +1,7 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
-  --color-brand-black: '#000000';
-  --color-brand-white: '#FFFFFF';
-  --color-brand-accent: '#00ffff';
-  /* // Cyan accent for links/highlights */
-
   --font-headline: 'Roboto Mono', monospace;
   --font-body: 'Inter', sans-serif;
 
@@ -53,7 +49,7 @@
 }
 
 body {
-  @apply bg-brand-black text-brand-white font-body selection:bg-brand-accent selection:text-brand-accent;
+  @apply font-body selection:bg-gray-600 selection:text-white;
 }
 
 h1,
@@ -69,13 +65,13 @@ html {
   scroll-behavior: smooth;
 }
 
-.standard-header-hidden-by-hero {
+.header-hidden-by-hero {
   opacity: 0 !important;
   transform: translateY(-100%) !important;
   pointer-events: none !important;
 }
 
-.standard-header-revealed {
+.header-revealed {
   opacity: 1 !important;
   transform: translateY(0) !important;
   pointer-events: auto !important;

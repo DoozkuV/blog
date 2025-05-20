@@ -1,0 +1,23 @@
+---
+interface Props {
+  tags: string[];
+  class?: string;
+}
+
+const { tags, class: className = "" } = Astro.props;
+---
+
+<div class="flex flex-wrap gap-2 mt-auto pt-2">
+  {
+    tags.map((tag) => (
+      <span
+        class:list={[
+          "text-xs px-2.5 py-1 rounded-full font-headline lowercase tracking-tight",
+          className,
+        ]}
+      >
+        #{tag}
+      </span>
+    ))
+  }
+</div>

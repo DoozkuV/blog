@@ -1,0 +1,53 @@
+---
+import type { PostFrontmatter } from "../utils/types.ts";
+import Header from "../components/layout/Header.astro";
+import TagsList from "../components/TagsList.astro";
+import Layout from "./Layout.astro";
+import "../styles/markdown.css";
+
+interface Props {
+  frontmatter: PostFrontmatter;
+}
+
+const { frontmatter } = Astro.props;
+const { title, desc: description, tags, image, author, pubDate } = frontmatter;
+---
+
+<Layout {title} {description}>
+  <Header slot="header" />
+  <div class="py-15 container mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="text-3xl md:text-4xl lg:text-5xl font-headline mb-4">
+      {title}
+    </h1>
+    <TagsList {tags} class="text-gray-500 mb-6" />
+
+    {
+      image && image.url && (
+        <div class="mb-8">
+          <img
+            class="w-full h-auto object-cover rounded-lg shadow-lg max-h-full"
+            src={image.url}
+            alt={image.alt || title}
+            width="300"
+          />
+        </div>
+      )
+    }
+
+    <p class="text-lg text-gray-400 mb-6 max-w-3xl font-headline">
+      {description}
+    </p>
+
+    <div
+      class="flex justify-between text-gray-500 font-headline mb-10 pb-6 border-b border-gray-800"
+    >
+      <p>{author}</p>
+      <p>{pubDate.slice(0, 10)}</p>
+    </div>
+
+    {/* Custom styled markdown content */}
+    <div class="markdown-content">
+      <slot />
+    </div>
+  </div>
+</Layout>

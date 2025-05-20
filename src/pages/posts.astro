@@ -1,0 +1,21 @@
+---
+import Header from "../components/layout/Header.astro";
+import Layout from "../layouts/Layout.astro";
+import PostsList from "../components/PostsList.astro";
+import { NAME } from "../utils/constants";
+import type { Post } from "../utils/types";
+
+const posts = Object.values(
+  import.meta.glob("./posts/*.md", { eager: true }),
+) as Post[];
+---
+
+<Layout title={`Posts | ${NAME}`} description="An index of all of my posts">
+  <Header slot="header" />
+  <div class="py-15 container mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="text-4xl md:text-5xl font-headline text-center mb-12 md:mb-16">
+      All Posts
+    </h1>
+    <PostsList {posts} />
+  </div>
+</Layout>

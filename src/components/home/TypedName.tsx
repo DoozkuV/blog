@@ -20,13 +20,13 @@ const TypedName: React.FC<TypedNameProps> = ({ name, className, typingSpeed = 12
     } else if (currentIndex === name.length && onFinishedTyping) {
       onFinishedTyping();
     }
-  }, [currentIndex, name, typingSpeed, onFinishedTyping]);
+  }, [currentIndex, onFinishedTyping]);
 
   return (
     <div className={`relative inline-block ${className || ''}`}>
       {currentIndex > 0 && <span aria-label={name}>{displayText}</span>}
       {currentIndex < name.length && (
-        <span className="inline-block w-[3px] h-[1em] bg-brand-white animate-blink ml-1 relative bottom-[0.1em]" aria-hidden="true">|</span>
+        <span className="inline-block w-[3px] h-[1em] animate-blink ml-1 relative bottom-[0.1em]" aria-hidden="true">|</span>
       )}
     </div>
   );

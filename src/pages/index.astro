@@ -1,58 +1,34 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import StandardHeader from "../components/layout/StandardHeader.astro";
+import Header from "../components/layout/Header.astro";
 import AnimatedIntro from "../components/home/AnimatedIntro";
-import LatestPosts from "../components/LatestPosts.astro";
+import PostsList from "../components/PostsList.astro";
+import { NAME } from "../utils/constants";
+import type { Post } from "../utils/types";
 
-// Configuration for InteractiveHeader
-const siteConfig = {
-  userName: "George Padron",
-  siteTitle: "GP",
-  linkedinUrl: "https://www.linkedin.com/in/george-padron-726623216/",
-  githubUrl: "https://www.github.com/DoozkuV",
-  // TODO: Link to my real X account
-  xUrl: "https://example.com",
-  introNavLinks: [
-    { href: "/#about-me-content", label: "About Me", id: "nav-about" },
-    { href: "/topics", label: "Topics", id: "nav-topics" },
-    { href: "/#latest-posts-content", label: "Posts" },
-  ],
-  standardNavLinks: [
-    { href: "/home", label: "Home" },
-    { href: "/#about-me-content", label: "About Me" },
-    { href: "/topics", label: "Topics" },
-  ],
-  standardHeaderId: "main-site-header",
-};
+// Set the id so the intro can hide/reveal the header
+const introNavLinks = [
+  { href: "/#about-me-content", label: "About", id: "nav-about" },
+  { href: "/#latest-posts-content", label: "Latest", id: "nav-latest-posts" },
+  { href: "/projects", label: "Projects", id: "nav-projects" },
+  { href: "/posts", label: "All Posts", id: "nav-topics" },
+];
+
+const allPosts = Object.values(
+  import.meta.glob("./posts/*.md", { eager: true }),
+) as Post[];
+const posts = allPosts.slice(0, 5);
 ---
 
 <Layout
-  title={`Home | ${siteConfig.userName} - Tech Blog`}
-  description={`Welcome to ${siteConfig.userName}'s tech blog.`}
+  title={`Home | ${NAME} - Tech Blog`}
+  description={`Welcome to ${NAME}'s tech blog.`}
 >
-  <StandardHeader
-    slot="header"
-    headerId={siteConfig.standardHeaderId}
-    siteTitle={siteConfig.siteTitle}
-    navLinks={siteConfig.standardNavLinks}
-    socialLinksConfig={{
-      linkedinUrl: siteConfig.linkedinUrl,
-      githubUrl: siteConfig.githubUrl,
-      xUrl: siteConfig.xUrl,
-    }}
-    initiallyHiddenClass="standard-header-hidden-by-hero"
-  />
+  <Header slot="header" id="main-site-header" class="header-hidden-by-hero" />
 
-  <AnimatedIntro
-    client:load
-    userName={siteConfig.userName}
-    linkedinUrl={siteConfig.linkedinUrl}
-    githubUrl={siteConfig.githubUrl}
-    xUrl={siteConfig.xUrl}
-    navLinks={siteConfig.introNavLinks}
-    standardHeaderId={siteConfig.standardHeaderId}
-  />
-
+  <div id="animated-intro">
+    <AnimatedIntro client:load navLinks={introNavLinks} />
+  </div>
   <div class="pt-0">
     <section
       id="about-me-content"
@@ -69,6 +45,34 @@ const siteConfig = {
       </div>
     </section>
 
-    <LatestPosts id="latest-posts-content" />
+    <section class="py-16 md:py-24" id="latest-posts-content">
+      <h2 class="text-4xl md:text-5xl font-headline text-center mb-12 md:mb-16">
+        Latest Posts
+      </h2>
+      <PostsList {posts} />
+    </section>
   </div>
 </Layout>
+
+<script>
+  // Make sure that the header appears after scrolling past the
+  const headerElement = document.getElementById("main-site-header")!;
+  const introElement = document.getElementById("animated-intro")!;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.intersectionRatio <= 0.25) {
+        headerElement.classList.remove("header-hidden-by-hero");
+        headerElement.classList.add("header-revealed");
+      } else {
+        headerElement.classList.add("header-hidden-by-hero");
+        headerElement.classList.remove("header-revealed");
+      }
+    },
+    {
+      root: null,
+      threshold: 0.25,
+    },
+  );
+  observer.observe(introElement);
+</script>
